@@ -65,6 +65,14 @@
            console.log("products update error", error.response);
          });
      },
+     handleDestroyProduct: function (product) {
+       axios.delete(`http://localhost:3000/products/${product.id}.json`).then((response) => {
+         console.log("products destroy", response);
+         var index = this.products.indexOf(product);
+         this.products.splice(index, 1);
+         this.handleClose();
+       });
+     },
 
      handleClose: function () {
        this.isProductsShowVisible = false;
@@ -78,7 +86,7 @@
       <ProductsNew v-on:createProduct="handleCreateProduct" />
       <ProductsIndex v-bind:products="products" v-on:showProduct="handleShowProduct" />
       <Modal v-bind:show="isProductsShowVisible" v-on:close="handleClose">
-        <ProductsShow v-bind:product="currentProduct" v-on:updateProduct="handleUpdateProduct" />
+        <ProductsShow v-bind:product="currentProduct" v-on:updateProduct="handleUpdateProduct" v-on:destroyProduct="handleDestroyProduct" />
      </Modal>
     </main>
   </template>

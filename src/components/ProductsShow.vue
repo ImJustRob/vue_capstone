@@ -26,7 +26,7 @@ export default {
     <p>Price: {{ product.price }}</p>
     <p>Description: {{ product.description }}</p>
     <p>Supplier Id: {{ product.supplier_id }}</p>
-    <form v-on:submit.prevent="handleSubmit">
+         <form v-on:submit.prevent="handleSubmit">
        <div>
          Name:
          <input v-model="editProductParams.name" type="text" />
@@ -45,7 +45,7 @@ export default {
        </div>
        <button type="submit">Update Product</button>
      </form>
-
+     <button v-on:click="$emit('destroyProduct', product)">Destroy Product</button>
   </div>
 </template>
 
