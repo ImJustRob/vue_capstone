@@ -45,6 +45,27 @@
        this.currentProduct = product;
        this.isProductsShowVisible = true;
      },
+
+     handleUpdateProduct: function (id, params) {
+       console.log("handleUpdateProduct", id, params);
+       axios
+         .patch(`http://localhost:3000/products/${id}.json`, params)
+         .then((response) => {
+           console.log("products update", response);
+           this.products = this.products.map((product) => {
+             if (product.id === response.data.id) {
+               return response.data;
+             } else {
+               return product;
+             }
+           });
+           this.handleClose();
+         })
+         .catch((error) => {
+           console.log("products update error", error.response);
+         });
+     },
+
      handleClose: function () {
        this.isProductsShowVisible = false;
      },
@@ -57,7 +78,7 @@
       <ProductsNew v-on:createProduct="handleCreateProduct" />
       <ProductsIndex v-bind:products="products" v-on:showProduct="handleShowProduct" />
       <Modal v-bind:show="isProductsShowVisible" v-on:close="handleClose">
-        <ProductsShow v-bind:product="currentProduct" />
+        <ProductsShow v-bind:product="currentProduct" v-on:updateProduct="handleUpdateProduct" />
      </Modal>
     </main>
   </template>
